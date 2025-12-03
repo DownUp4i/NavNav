@@ -8,6 +8,7 @@ public class DamageInteractor : MonoBehaviour
     private IDamageInteractable _interactable;
     private IDamagable _damagable;
 
+    private bool _isStarted;
 
     private void Awake()
     {
@@ -16,17 +17,32 @@ public class DamageInteractor : MonoBehaviour
 
     private void Update()
     {
-        if (_damagable != null)
-        {
+        if (_isStarted)
             _timeToInteract -= Time.deltaTime;
 
-            if (_timeToInteract <= 0) 
+        if (_timeToInteract <= 0)
+        {
+            if (_damagable != null)
+            {
                 _interactable.Interact(_damagable);
+            }
+
+            Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        _isStarted = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
         _damagable = other.GetComponent<IDamagable>();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _damagable = null;
     }
 }
