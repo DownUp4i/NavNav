@@ -34,11 +34,8 @@ public class DamageInteractor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _isStarted = true;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
         _damagable = other.GetComponent<IDamagable>();
+
     }
 
     private void OnTriggerExit(Collider other)

@@ -26,6 +26,9 @@ public class DamageAnimationHandler : MonoBehaviour
         
         if (_playerHealth.IsDead == true)
             StartDead();
+
+        Debug.Log("_isAnimationRunning " + _isAnimationRunning);
+        Debug.Log("_playerHealth.IsTakedDamage " + _playerHealth.IsTakedDamage);
     }
 
     public void OnAnimationStart() => _isAnimationRunning = true;
@@ -43,3 +46,4 @@ public class DamageAnimationHandler : MonoBehaviour
     }
 
 }
+ 
