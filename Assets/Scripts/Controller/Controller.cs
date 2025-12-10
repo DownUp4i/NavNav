@@ -1,8 +1,19 @@
 using UnityEngine;
 
-public abstract class Controller 
+public abstract class Controller
 {
-    public virtual Vector3 Direction {  get; protected set; }
+    private bool _isEnable;
 
-    public abstract void UpdateLogic(float deltaTime);
+    public void OnEnable() => _isEnable = true;
+    public void OnDisable() => _isEnable = false;
+
+    public void Update(float deltaTime)
+    {
+        if (_isEnable == false)
+            return;
+
+        UpdateLogic(deltaTime);
+    }
+
+    protected abstract void UpdateLogic(float deltaTime);
 }

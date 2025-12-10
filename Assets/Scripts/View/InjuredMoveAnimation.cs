@@ -6,11 +6,11 @@ public class InjuredMoveAnimation : MonoBehaviour
     private string _layerName = "Injured";
 
     [SerializeField] private Animator _animator;
-    [SerializeField] private PlayerHealth _playerHealth;
+    [SerializeField] private Character _character;
 
     private void Update()
     {
-        if (_playerHealth.CurrentHealth <= _playerHealth.MaxHealth * 0.30)
+        if (_character.CurrentHealth <= _character.MaxHealth * 0.30)
             SetLayerWeight(1);
         else
             SetLayerWeight(0);

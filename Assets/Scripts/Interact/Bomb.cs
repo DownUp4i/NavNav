@@ -7,6 +7,12 @@ public class Bomb : MonoBehaviour, IDamageInteractable
 
     private SphereCollider _sphereCollider;
 
+    public float Radius
+    {
+        get => _damageRadius;       
+        set => _damageRadius = value; 
+    }
+
     private void Awake()
     {
         _sphereCollider = GetComponent<SphereCollider>();

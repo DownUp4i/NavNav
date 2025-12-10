@@ -495,6 +495,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c94a574020d3de429d0c295b3a83db4, type: 3}
+--- !u!1 &192279115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192279117}
+  - component: {fileID: 192279116}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &192279116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192279115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1ec519a8471b1408c24f01db4d4d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 637724398}
+--- !u!4 &192279117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192279115}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.8518279, y: 4.6091013, z: 3.111665}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &192462321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1598,7 +1643,6 @@ GameObject:
   m_Component:
   - component: {fileID: 637724395}
   - component: {fileID: 637724394}
-  - component: {fileID: 637724396}
   - component: {fileID: 637724397}
   - component: {fileID: 637724398}
   m_Layer: 0
@@ -1650,21 +1694,6 @@ Transform:
   - {fileID: 1907487907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &637724396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 637724393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab4ca6ae9bdc48845baff751868621af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementSpeed: 3
-  _rotationSpeed: 900
-  _damageAnimationHandler: {fileID: 1907487911}
 --- !u!195 &637724397
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1696,11 +1725,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 637724393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36dbf2af409e96946a8656cd02f9ec00, type: 3}
+  m_Script: {fileID: 11500000, guid: 02b63d3ffb9bd4844a0703327cf74142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementSpeed: 3
+  _rotationSpeed: 700
   _maxHealth: 100
-  _currentHealth: 0
 --- !u!1 &648700385
 GameObject:
   m_ObjectHideFlags: 0
@@ -5535,7 +5565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8dd44ee2b3a604f8aa44abd70f48bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 637724398}
+  _character: {fileID: 637724398}
   _healthFill: {fileID: 61406100}
 --- !u!1001 &1731889379
 PrefabInstance:
@@ -5838,11 +5868,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c58bf5f45a5cc468587662ae104611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _character: {fileID: 0}
   _correctFlagPrefab: {fileID: -6976035186267833786, guid: 4c2fec82e8118de40b1ae6e28c06be70,
     type: 3}
   _wrongFlagPrefab: {fileID: 3671664591997747954, guid: 48256b3c2cc5b0c43958fbc4d05f59ff,
     type: 3}
-  _playerMovement: {fileID: 637724396}
 --- !u!4 &1745957469
 Transform:
   m_ObjectHideFlags: 0
@@ -6598,7 +6628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1907487908}
-  _player: {fileID: 637724396}
+  _character: {fileID: 637724398}
 --- !u!114 &1907487910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6612,7 +6642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1907487908}
-  _playerHealth: {fileID: 637724398}
+  _character: {fileID: 637724398}
 --- !u!114 &1907487911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6625,7 +6655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed548b6cb2b5104ba3b35b3c317e22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 637724398}
+  _character: {fileID: 637724398}
 --- !u!1001 &1908267331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7567,3 +7597,4 @@ SceneRoots:
   - {fileID: 893785549}
   - {fileID: 1318064672}
   - {fileID: 1210806264}
+  - {fileID: 192279117}
