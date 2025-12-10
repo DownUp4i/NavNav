@@ -803,7 +803,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4462681, y: -0.31886846, z: 0.1739917, w: 0.81785977}
+  m_LocalRotation: {x: 0.44626808, y: -0.31886843, z: 0.17399171, w: 0.81785977}
   m_LocalPosition: {x: 4.502, y: 6.7, z: 0.6750002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1699,6 +1699,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dbf2af409e96946a8656cd02f9ec00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
+=======
+  _movementSpeed: 3
+  _rotationSpeed: 700
+  _damageAnimationHandler: {fileID: 1907487911}
+>>>>>>> Stashed changes
   _maxHealth: 100
   _currentHealth: 0
 --- !u!1 &648700385
@@ -4172,7 +4178,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210806262}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4462681, y: -0.31886846, z: 0.1739917, w: 0.81785977}
+  m_LocalRotation: {x: 0.44626808, y: -0.31886843, z: 0.17399171, w: 0.81785977}
   m_LocalPosition: {x: 4.502, y: 6.7, z: 0.6750002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5838,6 +5844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c58bf5f45a5cc468587662ae104611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
+=======
+  _character: {fileID: 637724398}
+>>>>>>> Stashed changes
   _correctFlagPrefab: {fileID: -6976035186267833786, guid: 4c2fec82e8118de40b1ae6e28c06be70,
     type: 3}
   _wrongFlagPrefab: {fileID: 3671664591997747954, guid: 48256b3c2cc5b0c43958fbc4d05f59ff,
