@@ -4,27 +4,25 @@ using UnityEngine.AI;
 public class MouseController : Controller
 {
     private Camera _camera;
-    private Controller _positionController;
 
-    private IControllable _controllable;
-    private IInputController _inputController;
+    private Vector3 _hitPoint;
+    public Vector3 HitPoint => _hitPoint;
+    public bool IsButtonDown { get; private set; }
 
-    public MouseController(Camera camera, IControllable controllable, IInputController inputController)
+    public MouseController(Camera camera)
     {
         _camera = camera;
-        _controllable = controllable;
-        _inputController = inputController;
-
-        _positionController = new MousePositionController(_inputController);
     }
 
-    public override void UpdateLogic(float deltaTime)
+    protected override void UpdateLogic(float deltaTime)
     {
-        _positionController.UpdateLogic(deltaTime);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (_inputController.IsInputDown())
-        {
-            _controllable.Controll(_positionController.Direction);
-        }
+        Physics.Raycast(ray, out RaycastHit hit);
+
+        if (Input.GetMouseButtonDown(1))
+            _hitPoint = hit.point;
+
+        IsButtonDown = Input.GetMouseButtonDown(1);
     }
 }

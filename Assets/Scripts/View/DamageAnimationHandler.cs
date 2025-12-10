@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DamageAnimationHandler : MonoBehaviour
 {
-    [SerializeField] private PlayerHealth _playerHealth;
+    [SerializeField] private Character _character;
 
     private readonly int IsDeadKey = Animator.StringToHash("IsDead");
     private readonly int TakeDamageKey = Animator.StringToHash("TakeDamage");
@@ -21,14 +21,18 @@ public class DamageAnimationHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_playerHealth.IsTakedDamage == true)
+        if (_character.IsTakedDamage == true)
+        {
             TakeDamageStart();
-        
-        if (_playerHealth.IsDead == true)
-            StartDead();
+        }
 
-        Debug.Log("_isAnimationRunning " + _isAnimationRunning);
-        Debug.Log("_playerHealth.IsTakedDamage " + _playerHealth.IsTakedDamage);
+        if (_character.IsDead == true)
+            StartDead();
+    }
+
+    private void LateUpdate()
+    {
+        _character.ResetTakeDamage();
     }
 
     public void OnAnimationStart() => _isAnimationRunning = true;
@@ -46,4 +50,3 @@ public class DamageAnimationHandler : MonoBehaviour
     }
 
 }
- 

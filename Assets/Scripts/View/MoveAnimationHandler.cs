@@ -4,11 +4,11 @@ public class MoveAnimationHandler : MonoBehaviour
 {
     private readonly int IsRunningKey = Animator.StringToHash("IsRunning");
     [SerializeField] private Animator _animator;
-    [SerializeField] private PlayerMovement _player;
+    [SerializeField] private Character _character;
 
     private void Update()
     {
-        if (_player.CurrentVelocity.magnitude > 0.05f)
+        if (_character.CurrentVelocity.magnitude > 0.05f)
             StartRunning();
         else
             StopRuning();

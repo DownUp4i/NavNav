@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
@@ -6,7 +7,8 @@ public class DamageInteractor : MonoBehaviour
     [SerializeField] private float _timeToInteract;
 
     private IDamageInteractable _interactable;
-    private IDamagable _damagable;
+
+    private List<IDamagable> _damagableList = new List<IDamagable>();
 
     private bool _isStarted;
 
@@ -22,9 +24,12 @@ public class DamageInteractor : MonoBehaviour
 
         if (_timeToInteract <= 0)
         {
-            if (_damagable != null)
+            if (_damagableList != null && _damagableList.Count > 0)
             {
-                _interactable.Interact(_damagable);
+                foreach (IDamagable damagable in _damagableList)
+                {
+                    _interactable.Interact(damagable);
+                }
             }
 
             Destroy(gameObject);
@@ -33,13 +38,25 @@ public class DamageInteractor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _isStarted = true;
-        _damagable = other.GetComponent<IDamagable>();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _interactable.Radius);
 
+        _isStarted = true;
+
+        foreach(Collider collider in colliders)
+        {
+            IDamagable damagable = collider.GetComponent<IDamagable>();
+            if (damagable != null)
+                _damagableList.Add(damagable);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _damagable = null;
+        IDamagable damagable = other.GetComponent<IDamagable>();
+
+        if (damagable != null)
+        {
+            _damagableList.Remove(damagable);
+        }
     }
 }
