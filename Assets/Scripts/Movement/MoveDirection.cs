@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class MoveDirection
+public class MoveDirection 
 {
+    private Character _character;
     private CharacterController _controller;
-    private float _speed;
 
-    public MoveDirection(float speed, CharacterController controller)
+    public MoveDirection(Character character)
     {
-        _speed = speed;
-        _controller = controller;
+        _character = character;
+        _controller = _character.GetComponent<CharacterController>();
     }
 
-    public void DirectionTo(Vector3 input)
+    public void Move(Vector3 input, float speed)
     {
-        _controller.Move(input.normalized * _speed * Time.deltaTime);
+        _controller.Move(input.normalized * speed * Time.deltaTime);
     }
 }

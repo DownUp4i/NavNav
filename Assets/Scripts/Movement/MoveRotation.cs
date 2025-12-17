@@ -1,28 +1,25 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class MoveRotation 
+public class MoveRotation
 {
-    private float _speed;
-    private Transform _transform;
-
-    public MoveRotation(float speed, Transform transform)
+    private IRotatable _rotatable;
+    public MoveRotation(IRotatable rotatable)
     {
-        _speed = speed;
-        _transform = transform;
+        _rotatable = rotatable;
     }
 
-    public void SetInputDirection(Vector3 input)
+    public void SetRotation(Vector3 input, float speed, Transform transform)
     {
         if (input.magnitude < 0.05f)
             return;
 
         Quaternion lookRotation = Quaternion.LookRotation(input);
 
-        float step = _speed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
 
-        _transform.rotation = Quaternion.RotateTowards(_transform.rotation, lookRotation, step);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, step);
+
+        _rotatable.SetRotation(input);
     }
-
-
 }

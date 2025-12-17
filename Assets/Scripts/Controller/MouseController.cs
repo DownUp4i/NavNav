@@ -6,13 +6,14 @@ public class MouseController : Controller
     private Camera _camera;
 
     private Vector3 _hitPoint;
-    public Vector3 HitPoint => _hitPoint;
     public bool IsButtonDown { get; private set; }
 
     public MouseController(Camera camera)
     {
         _camera = camera;
     }
+
+    public Vector3 GetPosition() => _hitPoint;
 
     protected override void UpdateLogic(float deltaTime)
     {

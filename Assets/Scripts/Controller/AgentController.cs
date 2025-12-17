@@ -1,16 +1,16 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.TextCore.Text;
 
 public class AgentController : Controller
 {
+    private IMoveable _moveable;
+    private IRotatable _rotatable;
+
     private NavMeshAgent _agent;
     private NavMeshPath _path;
     private Character _character;
 
     public Vector3 CurrentVelocity => _agent.desiredVelocity;
-    public Vector3 MouseHitPoint => _character.MouseHitPoint;
 
     public AgentController(NavMeshAgent agent, Character character)
     {
@@ -26,10 +26,10 @@ public class AgentController : Controller
 
     protected override void UpdateLogic(float deltaTime)
     {
-        bool isAvailablePath = CheckPath(MouseHitPoint, _path);
+        bool isAvailablePath = _agent.CalculatePath(_character.TargetPosition, _path);
 
         if (isAvailablePath)
-            SetDestination(MouseHitPoint);
+            SetDestination(_character.TargetPosition);
 
         if (NavMeshUtils.GetPathLength(_path) < 0.05f)
             StopMove();
@@ -37,11 +37,7 @@ public class AgentController : Controller
             ResumeMove();
     }
 
-    public bool CheckPath(Vector3 mouseHitPoint, NavMeshPath _navMeshPath)
-    => _agent.CalculatePath(mouseHitPoint, _navMeshPath);
-
     public void SetDestination(Vector3 direction) => _agent.SetDestination(direction);
-    public void SynchronizePosition(Transform target) => _agent.nextPosition = target.position;
 
     public void StopMove() => _agent.isStopped = true;
     public void ResumeMove() => _agent.isStopped = false;

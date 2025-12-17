@@ -1730,6 +1730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 3
   _rotationSpeed: 700
+  _damageAnimationHandler: {fileID: 1907487911}
   _maxHealth: 100
 --- !u!1 &648700385
 GameObject:
@@ -5868,11 +5869,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c58bf5f45a5cc468587662ae104611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _character: {fileID: 0}
+  _character: {fileID: 637724398}
   _correctFlagPrefab: {fileID: -6976035186267833786, guid: 4c2fec82e8118de40b1ae6e28c06be70,
     type: 3}
   _wrongFlagPrefab: {fileID: 3671664591997747954, guid: 48256b3c2cc5b0c43958fbc4d05f59ff,
     type: 3}
+  _input: {fileID: 192279116}
 --- !u!4 &1745957469
 Transform:
   m_ObjectHideFlags: 0
