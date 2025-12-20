@@ -4,7 +4,7 @@ public class MoveAnimationHandler : MonoBehaviour
 {
     private readonly int IsRunningKey = Animator.StringToHash("IsRunning");
     [SerializeField] private Animator _animator;
-    [SerializeField] private Character _character;
+    [SerializeField] private AgentCharacter _character;
 
     private void Update()
     {

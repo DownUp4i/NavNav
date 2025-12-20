@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IMoveable
+public interface IMoveable : ITransformPosition, ITargetPosition
 {
     Vector3 CurrentVelocity { get; }
 

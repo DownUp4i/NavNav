@@ -5,40 +5,37 @@ public class AgentController : Controller
 {
     private IMoveable _moveable;
     private IRotatable _rotatable;
+    private IAgentMoveable _agentMoveable;
+    private ITargetPosition _targetPosition;
 
-    private NavMeshAgent _agent;
-    private NavMeshPath _path;
-    private Character _character;
-
-    public Vector3 CurrentVelocity => _agent.desiredVelocity;
-
-    public AgentController(NavMeshAgent agent, Character character)
+    public AgentController(NavMeshAgent agent, IAgentMoveable agentMoveable, IMoveable moveable, IRotatable rotatable, ITargetPosition targetPosition)
     {
-        _agent = agent;
-        _path = new NavMeshPath();
-        _character = character;
-
-        _agent.acceleration = 999f;
-
-        _agent.updateRotation = false;
-        _agent.updatePosition = false;
+        _rotatable = rotatable;
+        _moveable = moveable;
+        _agentMoveable = agentMoveable;
+        _targetPosition = targetPosition;
     }
 
     protected override void UpdateLogic(float deltaTime)
     {
-        bool isAvailablePath = _agent.CalculatePath(_character.TargetPosition, _path);
+        bool isAvailablePath = _agentMoveable.isAvailablePath(_targetPosition.TargetPosition);
 
         if (isAvailablePath)
-            SetDestination(_character.TargetPosition);
-
-        if (NavMeshUtils.GetPathLength(_path) < 0.05f)
-            StopMove();
+        {
+            SetDirection(_moveable.CurrentVelocity);
+            SetRotatiton(_moveable.CurrentVelocity);
+        }
         else
-            ResumeMove();
+        {
+            SetDirection(Vector3.zero);
+            SetRotatiton(Vector3.zero);
+        }
     }
 
-    public void SetDestination(Vector3 direction) => _agent.SetDestination(direction);
+    public void SetDirection(Vector3 direction) => _moveable.SetDirection(direction);
+    public void SetRotatiton(Vector3 direction) => _rotatable.SetRotation(direction);
 
-    public void StopMove() => _agent.isStopped = true;
-    public void ResumeMove() => _agent.isStopped = false;
+
+
+
 }

@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class FlagSpawner : MonoBehaviour
 {
-    [SerializeField] private Character _character;
+    [SerializeField] private AgentCharacter _character;
     [SerializeField] private Flag _correctFlagPrefab;
     [SerializeField] private Flag _wrongFlagPrefab;
-    [SerializeField] private InputExample _input;
+    [SerializeField] private InputHandler _input;
 
     private Flag _currentFlag;
 
     private void Update()
     {
-        bool isPathAvailable = _character.IsPossibleWay(_character.TargetPosition) == true && _character.IsDead == false && _character.CanMove() == true;
+        bool isPathAvailable = _character.isAvailablePath(_character.TargetPosition) == true && _character.IsDead == false && _character.CanMove() == true;
 
         if (_input.IsRightMouseDown)
         {

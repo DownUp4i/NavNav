@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class MoveDirection 
+public class DirectionalMover 
 {
-    private Character _character;
+    private AgentCharacter _character;
     private CharacterController _controller;
 
-    public MoveDirection(Character character)
+    public DirectionalMover(AgentCharacter character)
     {
         _character = character;
         _controller = _character.GetComponent<CharacterController>();

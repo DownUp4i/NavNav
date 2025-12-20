@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DamageAnimationHandler : MonoBehaviour
 {
-    [SerializeField] private Character _character;
+    [SerializeField] private AgentCharacter _character;
 
     private readonly int IsDeadKey = Animator.StringToHash("IsDead");
     private readonly int TakeDamageKey = Animator.StringToHash("TakeDamage");

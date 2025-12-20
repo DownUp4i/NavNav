@@ -6,7 +6,7 @@ public class InjuredMoveAnimation : MonoBehaviour
     private string _layerName = "Injured";
 
     [SerializeField] private Animator _animator;
-    [SerializeField] private Character _character;
+    [SerializeField] private AgentCharacter _character;
 
     private void Update()
     {
