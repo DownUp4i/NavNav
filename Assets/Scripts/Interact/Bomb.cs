@@ -19,7 +19,6 @@ public class Bomb : MonoBehaviour, IInteractable
     public bool IsInteracted => _isInteracted;
     public bool SoundPlayed => _soundPlayed;
 
-
     private void Awake()
     {
         _sphereCollider = GetComponent<SphereCollider>();
@@ -50,13 +49,13 @@ public class Bomb : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(_timeToInteract);
 
+        SetSoundPlayed();
+
         if (_damagable != null)
-        {
-            SetSoundPlayed();
             _damagable.TakeDamage(_damageValue);
-            yield return new WaitUntil(() => _soundPlayed);
-            Destroy(gameObject);
-        }
+
+        yield return new WaitUntil(() => _soundPlayed);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
