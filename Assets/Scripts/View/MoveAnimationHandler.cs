@@ -3,12 +3,15 @@ using UnityEngine;
 public class MoveAnimationHandler : MonoBehaviour
 {
     private readonly int IsRunningKey = Animator.StringToHash("IsRunning");
+    private readonly int InJumpProcessKey = Animator.StringToHash("InJumpProcess");
     [SerializeField] private Animator _animator;
     [SerializeField] private AgentCharacter _character;
 
     private void Update()
     {
-        if (_character.CurrentVelocity.magnitude > 0.05f)
+        _animator.SetBool(InJumpProcessKey, _character.InJumpProcess);
+
+        if (_character.CurrentVelocity.magnitude > 0.05f && _character.InJumpProcess == false)
             StartRunning();
         else
             StopRuning();

@@ -10,7 +10,7 @@ public class CharacterHealth
 
     public int MaxHealth => _maxHealth;
     public int CurrentHealth => _currentHealth;
-    public bool IsTakedDamage { get; set; }
+    public bool IsTakedDamage => _isTakedDamage;
     public bool IsDead => _currentHealth <= 0;
 
     public CharacterHealth(int maxHealth)
@@ -18,19 +18,28 @@ public class CharacterHealth
         _maxHealth = maxHealth;
     }
 
-    public void SetCurrentHealth()
+    public void SetCurrentHealth(int value)
     {
-        _currentHealth = _maxHealth;
+        _currentHealth = value;
     }
 
+    public void Heal(int value)
+    {
+        if(_currentHealth > _maxHealth)
+            _currentHealth = _maxHealth;
+
+        _currentHealth += value;
+    }
 
     public void TakeDamage(int damage)
     {
-        IsTakedDamage = true;
+        _isTakedDamage = true;
 
         if (damage < 0)
             return;
 
         _currentHealth -= damage;
     }
+
+    public void ResetTakeDamage() => _isTakedDamage = false;
 }

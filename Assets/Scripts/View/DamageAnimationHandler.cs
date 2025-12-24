@@ -22,21 +22,18 @@ public class DamageAnimationHandler : MonoBehaviour
     private void Update()
     {
         if (_character.IsTakedDamage == true)
-        {
             TakeDamageStart();
-        }
 
         if (_character.IsDead == true)
             StartDead();
     }
 
-    private void LateUpdate()
+    public void OnAnimationStart() => _isAnimationRunning = true;
+    public void OnAnimationEnd()
     {
+        _isAnimationRunning = false;
         _character.ResetTakeDamage();
     }
-
-    public void OnAnimationStart() => _isAnimationRunning = true;
-    public void OnAnimationEnd() => _isAnimationRunning = false;
 
 
     private void TakeDamageStart()

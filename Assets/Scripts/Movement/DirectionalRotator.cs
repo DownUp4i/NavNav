@@ -11,12 +11,12 @@ public class DirectionalRotator
         _transform = transform;
     }
 
-    public void Rotate(Vector3 input)
+    public void Rotate(Vector3 direction)
     {
-        if (input.magnitude < 0.05f)
+        if (direction.magnitude < 0.05f)
             return;
 
-        Quaternion lookRotation = Quaternion.LookRotation(input);
+        Quaternion lookRotation = Quaternion.LookRotation(direction.normalized);
 
         float step = _speed * Time.deltaTime;
 

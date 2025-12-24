@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 
     private AgentController _agentController;
     private MouseController _mouseController;
+    private AgentJumpHandler _agentJumpHandler;
 
     public bool IsRightMouseDown => _mouseController.IsButtonDown;
 

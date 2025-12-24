@@ -1,17 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour, IDamageInteractable
+public class Bomb : MonoBehaviour, IInteractable
 {
-    [SerializeField] private int _damage;
+    [SerializeField] private int _damageValue;
     [SerializeField] private float _damageRadius;
+    [SerializeField] private float _timeToInteract;
 
+    private IDamagable _damagable;
     private SphereCollider _sphereCollider;
 
-    public float Radius
-    {
-        get => _damageRadius;       
-        set => _damageRadius = value; 
-    }
+    private bool _soundPlayed = false;
+    private bool _isInteracted = false;
+
+    public bool IsInteracted => _isInteracted;
+    public bool SoundPlayed => _soundPlayed;
+
 
     private void Awake()
     {
@@ -19,14 +26,40 @@ public class Bomb : MonoBehaviour, IDamageInteractable
         _sphereCollider.radius = _damageRadius;
     }
 
-    public void Interact(IDamagable idamagable)
+    private void OnTriggerEnter(Collider other)
     {
-        idamagable.TakeDamage(_damage);
+        IDamagable damagable = other.GetComponent<IDamagable>();
 
-        Destroy(this.gameObject);
+        if (damagable != null)
+            _damagable = damagable;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerExit(Collider other)
+    {
+        _damagable = null;
+    }
+
+    public void SetSoundPlayed() => _soundPlayed = true;
+
+    public void Interact()
+    {
+        StartCoroutine(InteractProcess());
+    }
+
+    private IEnumerator InteractProcess()
+    {
+        yield return new WaitForSeconds(_timeToInteract);
+
+        if (_damagable != null)
+        {
+            SetSoundPlayed();
+            _damagable.TakeDamage(_damageValue);
+            yield return new WaitUntil(() => _soundPlayed);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, _damageRadius);
