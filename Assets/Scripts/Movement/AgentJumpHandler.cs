@@ -10,6 +10,7 @@ public class AgentJumpHandler
     private MonoBehaviour _coroutineRunner;
     private Coroutine _jumpProcess;
     private AnimationCurve _yOffsetCurve;
+    private IJumpable _jumpable;
 
     public AgentJumpHandler(float speed, NavMeshAgent agent, MonoBehaviour coroutineRunner, AnimationCurve OffsetCurve)
     {
@@ -21,24 +22,29 @@ public class AgentJumpHandler
 
     public bool InProcess => _jumpProcess != null;
 
-    public void Jump(OffMeshLinkData offMeshLinkData, Vector3 endJumpPosition)
+    public void Jump(OffMeshLinkData offMeshLinkData)
     {
         if (InProcess)
             return;
 
-        _jumpProcess = _coroutineRunner.StartCoroutine(JumpProcess(offMeshLinkData, endJumpPosition));
+        _jumpProcess = _coroutineRunner.StartCoroutine(JumpProcess(offMeshLinkData));
     }
 
-    private IEnumerator JumpProcess(OffMeshLinkData offMeshLinkData, Vector3 endJumpPosition)
+    public void Update(OffMeshLinkData offMeshLinkData)
     {
-        float duration = Vector3.Distance(offMeshLinkData.startPos, endJumpPosition) / _speed;
+        Jump(offMeshLinkData);
+    }
+
+    private IEnumerator JumpProcess(OffMeshLinkData offMeshLinkData)
+    {
+        float duration = Vector3.Distance(offMeshLinkData.startPos, offMeshLinkData.endPos) / _speed;
 
         float progress = 0;
 
         while (progress < duration)
         {
             float yOffset = _yOffsetCurve.Evaluate(progress / duration);
-            _agent.transform.position = Vector3.Lerp(offMeshLinkData.startPos, endJumpPosition, progress / duration) + Vector3.up * yOffset;
+            _agent.transform.position = Vector3.Lerp(offMeshLinkData.startPos, offMeshLinkData.endPos, progress / duration) + Vector3.up * yOffset;
             progress += Time.deltaTime;
             yield return null;
         }

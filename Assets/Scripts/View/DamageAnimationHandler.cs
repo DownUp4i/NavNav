@@ -21,6 +21,9 @@ public class DamageAnimationHandler : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(_character.IsTakedDamage + " _character.IsTakedDamage");
+        Debug.Log(_isAnimationRunning + " _isAnimationRunning");
+
         if (_character.IsTakedDamage == true)
             TakeDamageStart();
 
@@ -28,7 +31,6 @@ public class DamageAnimationHandler : MonoBehaviour
             StartDead();
     }
 
-    public void OnAnimationStart() => _isAnimationRunning = true;
     public void OnAnimationEnd()
     {
         _isAnimationRunning = false;
@@ -38,7 +40,9 @@ public class DamageAnimationHandler : MonoBehaviour
 
     private void TakeDamageStart()
     {
+        _isAnimationRunning = true;
         _animator.SetTrigger(TakeDamageKey);
+        _character.ResetTakeDamage();
     }
 
     private void StartDead()

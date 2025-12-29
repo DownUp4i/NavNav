@@ -2352,7 +2352,7 @@ MonoBehaviour:
   _rotationSpeed: 900
   _jumpSpeed: 5
   _damageAnimationHandler: {fileID: 1907487911}
-  _maxHealth: 100
+  _maxHealth: 200
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -5831,7 +5831,7 @@ MonoBehaviour:
   _raduisSpawner: 2
   _healthKitPrefab: {fileID: 3458801543037290517, guid: 72d8652ea8668774bb40c1320c4ae866,
     type: 3}
-  _timeToSpawn: 2
+  _timeToSpawn: 1
 --- !u!4 &1225651162
 Transform:
   m_ObjectHideFlags: 0

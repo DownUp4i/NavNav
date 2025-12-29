@@ -13,11 +13,11 @@ public class Bomb : MonoBehaviour, IInteractable
     private IDamagable _damagable;
     private SphereCollider _sphereCollider;
 
-    private bool _soundPlayed = false;
+    private bool _isSoundPlayed = false;
     private bool _isInteracted = false;
 
     public bool IsInteracted => _isInteracted;
-    public bool SoundPlayed => _soundPlayed;
+    public bool SoundPlayed => _isSoundPlayed;
 
     private void Awake()
     {
@@ -38,23 +38,25 @@ public class Bomb : MonoBehaviour, IInteractable
         _damagable = null;
     }
 
-    public void SetSoundPlayed() => _soundPlayed = true;
+    public void SetSoundPlayed() => _isSoundPlayed = true;
 
     public void Interact()
     {
-        StartCoroutine(InteractProcess());
+        if (_isInteracted == false)
+            StartCoroutine(InteractProcess());
     }
 
     private IEnumerator InteractProcess()
     {
-        yield return new WaitForSeconds(_timeToInteract);
+        _isInteracted = true;
 
+        yield return new WaitForSeconds(_timeToInteract);
         SetSoundPlayed();
 
         if (_damagable != null)
             _damagable.TakeDamage(_damageValue);
 
-        yield return new WaitUntil(() => _soundPlayed);
+        yield return new WaitUntil(() => _isSoundPlayed);
         Destroy(gameObject);
     }
 

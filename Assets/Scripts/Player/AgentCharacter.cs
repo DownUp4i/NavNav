@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GridBrushBase;
 
-public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMoveable, ITargetPosition, IHealable
+public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMoveable, ITargetPosition, IHealable, IJumpable
 {
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
@@ -28,7 +28,7 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
     private Vector3 _moveDirection;
     private Vector3 _rotationDirection;
 
-    private Vector3 _endJumpPosition;
+    public bool InJumpProcess => _agentJumpHandler.InProcess;
 
     public Vector3 CurrentVelocity => _agent.desiredVelocity;
     public Vector3 Position => transform.position;
@@ -38,8 +38,6 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
     public int MaxHealth => _health.MaxHealth;
     public bool IsTakedDamage => _health.IsTakedDamage;
     public bool IsDead => _health.IsDead;
-    public bool InJumpProcess => _agentJumpHandler.InProcess;
-
 
     private void Awake()
     {
@@ -63,9 +61,9 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
 
     private void Update()
     {
-        if (IsDead || CanMove() == false) return;
+        Debug.Log(IsTakedDamage + " IsTakedDamage");
 
-        SynchronizePosition(transform);
+        if (IsDead || CanMove() == false) return;
 
         if (NavMeshUtils.GetPathLength(_path) < 0.05f)
             StopMove();
@@ -77,23 +75,15 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
             _agent.SetDestination(_targetPosition);
             Move();
             Rotate();
+
+            if (IsOnNavMeshLink(out OffMeshLinkData offMeshLinkData))
+                Jump(offMeshLinkData);
         }
+    }
 
-        if (IsOnNavMeshLink(out OffMeshLinkData offMeshLinkData))
-        {
-            if (InJumpProcess == false)
-            {
-                if (Vector3.Distance(offMeshLinkData.startPos, offMeshLinkData.endPos) > Vector3.Distance(offMeshLinkData.startPos, _targetPosition))
-                    _endJumpPosition = _targetPosition;
-                else
-                    _endJumpPosition = offMeshLinkData.endPos;
-
-                SetRotation(_endJumpPosition - offMeshLinkData.startPos);
-
-                Jump(offMeshLinkData, _endJumpPosition);
-            }
-            return;
-        }
+    private void LateUpdate()
+    {
+        SynchronizePosition(transform);
     }
 
     public bool isAvailablePath(Vector3 position)
@@ -123,6 +113,8 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
     public void StopMove() => _agent.isStopped = true;
     public void ResumeMove() => _agent.isStopped = false;
 
+    public void Jump(OffMeshLinkData offMeshLinkData) => _agentJumpHandler.Update(offMeshLinkData);
+
     public bool IsOnNavMeshLink(out OffMeshLinkData offMeshLinkData)
     {
         if (_agent.isOnOffMeshLink)
@@ -134,6 +126,4 @@ public class AgentCharacter : MonoBehaviour, IDamagable, IRotatable, IAgentMovea
         offMeshLinkData = default(OffMeshLinkData);
         return false;
     }
-
-    public void Jump(OffMeshLinkData offMeshLinkData, Vector3 endJumpPosition) => _agentJumpHandler.Jump(offMeshLinkData, endJumpPosition);
 }
